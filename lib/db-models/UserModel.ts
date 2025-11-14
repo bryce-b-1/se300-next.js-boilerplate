@@ -15,7 +15,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please provide a password']
     }
-});
+}, { versionKey: false });
 
 //This line tells Mongoose to use your 'Users' collection
 export default mongoose.models.User || mongoose.model('User', UserSchema, 'Users');
