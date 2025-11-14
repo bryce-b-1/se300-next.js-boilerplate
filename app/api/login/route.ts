@@ -1,3 +1,7 @@
+/**
+ * Router that handles user login requests.
+ */
+
 import User from '@/lib/models/User'; // <-- The only logic import we need!
 import { NextResponse } from 'next/server';
 
