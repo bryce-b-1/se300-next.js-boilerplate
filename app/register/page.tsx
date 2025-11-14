@@ -2,28 +2,29 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import styles from '../login/login.module.css'; // reuse same styles
+import styles from '../login/login.module.css';   // Reusing styles from whats already in the login page
 
+//State variables
 export default function RegisterPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const router = useRouter();
+  const [email, setEmail] = useState('');         //Stores the user's email input
+  const [password, setPassword] = useState('');   //Stores the user's password input
+  const [error, setError] = useState('');         //Stores error messages
+  const router = useRouter();                     //Next.js page router
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError('');
+    e.preventDefault();               // Prevent default form submission
+    setError('');                     // Clears previous error messages
 
     try {
-      const res = await fetch('/api/register', {
+      const res = await fetch('/api/register', {      // Sends request to API route for registration
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password }),    // Sends email and password in request
       });
 
-      if (res.ok) {
+      if (res.ok) {                // If registration succeeds then user is redirected to dashboard without needing to log in again
         router.push('/dashboard');
-      } else {
+      } else {                     // If registration fails then display error message 
         const data = await res.json();
         setError(data.error || 'Account creation failed.');
       }
