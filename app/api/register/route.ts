@@ -1,4 +1,3 @@
-// register/route.ts
 import User from '@/lib/models/User'; // <-- Only import the User class
 import { NextResponse } from 'next/server';
 
