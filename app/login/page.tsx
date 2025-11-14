@@ -71,6 +71,10 @@ export default function LoginPage() {
           <button type="submit" className={styles.loginButton}>
             Login
           </button>
+
+          <button type="button" className={styles.loginButton} onClick={() => router.push('/register')}>
+            Create Account
+          </button>
         </form>
       </div>
     </main>
