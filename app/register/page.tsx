@@ -1,25 +1,23 @@
-'use client'; 
+'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import styles from './login.module.css';
+import styles from '../login/login.module.css'; // reuse same styles
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const router = useRouter(); 
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); 
-    setError(''); 
+    e.preventDefault();
+    setError('');
 
     try {
-      const res = await fetch('/api/login', {
+      const res = await fetch('/api/register', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
 
@@ -27,7 +25,7 @@ export default function LoginPage() {
         router.push('/dashboard');
       } else {
         const data = await res.json();
-        setError(data.error || 'Login failed.');
+        setError(data.error || 'Account creation failed.');
       }
     } catch (err) {
       setError('An error occurred. Please try again.');
@@ -37,9 +35,9 @@ export default function LoginPage() {
   return (
     <main className={styles.container}>
       <div className={styles.loginBox}>
-        <h1>Welcome!</h1>
-        <h2>Log in to Multi Task Managers</h2>
-        <p>Sign in to your account</p>
+        <h1>Create Account</h1>
+        <h2>Join Multi Task Managers</h2>
+        <p>Fill in your details to get started</p>
         <form onSubmit={handleSubmit}>
           <div className={styles.inputGroup}>
             <label htmlFor="email">Email</label>
@@ -47,8 +45,8 @@ export default function LoginPage() {
               type="email"
               id="email"
               name="email"
-              placeholder="admin@example.com"
-              value={email} 
+              placeholder="you@example.com"
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
@@ -60,19 +58,15 @@ export default function LoginPage() {
               id="password"
               name="password"
               placeholder="••••••••"
-              value={password} 
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
           </div>
-          
-          {error && <p className={styles.error}>{error}</p>}
-          
-          <button type="submit" className={styles.loginButton}>
-            Login
-          </button>
 
-          <button type="button" className={styles.loginButton} onClick={() => router.push('/register')}>
+          {error && <p className={styles.error}>{error}</p>}
+
+          <button type="submit" className={styles.loginButton}>
             Create Account
           </button>
         </form>
