@@ -1,10 +1,12 @@
 import User from '@/lib/models/User'; // <-- The only logic import we need!
+import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   try {
     //Get email and password from the React form
     const { email, password } = await request.json();
+
 
     if (!email || !password) {
       return NextResponse.json(
@@ -15,6 +17,13 @@ export async function POST(request: Request) {
 
     //Calls the Login method from User class
     const loginSuccess = await User.login(email, password);
+
+    const token = email;
+
+    (await cookies()).set("session", token, {
+      httpOnly: true,
+      path: "/",
+    });
 
     //Return a response based on success or failure
     if (loginSuccess) {
