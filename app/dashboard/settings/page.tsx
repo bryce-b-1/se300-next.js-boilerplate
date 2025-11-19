@@ -29,6 +29,7 @@ export default function SettingsPage() {
       <section className="rounded-lg border bg-white p-6 shadow-sm">
         <NotificationSettings />
       </section>
+
     </div>
   );
 }

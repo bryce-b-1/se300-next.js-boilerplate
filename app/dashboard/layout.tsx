@@ -4,6 +4,7 @@ import styles from './dashboard.module.css';
 import { cookies } from "next/headers";
 import UserModel from "@/lib/db-models/UserModel";
 import dbConnect from "@/lib/dbConnect";
+import { getCurrentUserFirstName, getCurrentUserID } from '@/lib/auth/getCurrentUser';
 
 export default async function DashboardLayout({
   children, // will be a page or nested layout
@@ -11,12 +12,12 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }){ 
 
-  const email = null; // null for now
+  const firstName = await getCurrentUserFirstName();
 
   return (
     <section className={styles.dashboardContainer}>
       <nav className={styles.sidebar}>
-        <SideNav email={email ?? ""} />
+        <SideNav firstName={firstName ?? ""} />
       </nav>
       <main className={styles.mainContent}>
         {children}

@@ -1,12 +1,4 @@
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background-color: #f0f2f5;
-}
-
-.loginBox {
+.box {
   padding: 40px;
   background: white;
   border-radius: 8px;
@@ -35,7 +27,7 @@
   border-radius: 4px;
 }
 
-.loginButton {
+.button {
   display: block;
   width: 100%;
   padding: 12px;

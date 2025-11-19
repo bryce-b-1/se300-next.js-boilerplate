@@ -9,10 +9,10 @@ import User from '@/lib/models/User';
 //   email: String
 // }
 
-export default function SideNav({email}: {email: String}) {
+export default function SideNav({firstName}: {firstName: string}) {
 
 
-    const displayName = email ? email : "User";
+    const displayName = firstName ? firstName : "User";
   return (
     <div className="flex h-full flex-col px-3 py-4 md:px-2">
       {/* <Link
