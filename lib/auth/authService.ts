@@ -45,7 +45,7 @@ export async function createUser(email: string, password: string, firstName: str
         throw new ExistingUserError();
     }
 
-    const userCount = await UserModel.countDocuments(); // TODO: this needs to grab user couont not documents
+    const userCount = await UserModel.countDocuments();
 
     console.log("Uhh count is " + userCount);
 

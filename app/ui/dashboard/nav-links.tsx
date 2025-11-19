@@ -21,7 +21,7 @@ const links = [
 ];
 
 
-export default function NavLinks() {
+export default function NavLinks() { // need to be updated to link!!!! i think?
   return (
     <>
       {links.map((link) => {

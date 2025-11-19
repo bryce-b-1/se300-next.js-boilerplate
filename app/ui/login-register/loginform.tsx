@@ -14,7 +14,7 @@ export default function LoginForm() {
     e.preventDefault();
     setError('');
 
-    try { // can be condensed down. 
+    try { // can be condensed down. I feel like this should be in the page too...
       const res = await fetch('/api/login', {
         method: 'POST',
         headers: {
