@@ -1,10 +1,12 @@
-import User from '@/lib/models/User'; // <-- Only import the User class
+import { createUser } from '@/lib/auth/authService';
+import { ExistingUserError } from '@/lib/auth/erorrs';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   try {
     // Get email and password from the React form
-    const { email, password } = await request.json();
+    const { email, password, firstName } = await request.json();
+    let userFirstName = "Default User"; // default name here
 
     if (!email || !password) {
       return NextResponse.json(
@@ -13,23 +15,24 @@ export async function POST(request: Request) {
       );
     }
 
-    // Calls the Register method from User class
-    const result = await User.register(email, password);
+    
 
-    // Return a response based on success or failure
-    if (result.success) {
-      return NextResponse.json({ message: 'Account created successfully!' });
-    } else {
-      return NextResponse.json(
-        { error: result.error || 'Account creation failed.' },
-        { status: result.error === 'User already exists' ? 409 : 500 }
-      );
+    if(firstName == ""){
+      userFirstName = firstName;
     }
+
+    const result = await createUser(email, password, userFirstName);
+
+
+    return NextResponse.json({ message: 'Account created successfully!' });
+
+
   } catch (error) {
-    console.error(error);
-    return NextResponse.json(
-      { error: 'Server error occurred' },
-      { status: 500 }
-    );
+      if(error instanceof ExistingUserError){
+        return new NextResponse("User Already Exists", {status: 401});
+      }
+      
+      console.error("Register Error", error);
+      return new NextResponse("Server Internal Error", {status: 500});
   }
 }

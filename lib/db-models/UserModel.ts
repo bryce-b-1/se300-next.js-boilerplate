@@ -1,10 +1,14 @@
 import mongoose from 'mongoose';
 
 const UserSchema = new mongoose.Schema({
-    userID: {
+    userId: {
         type: Number,
         required: [true, 'Please provide a userID'],
         unique: true
+    },
+    firstName: {
+        type: String,
+        required: [true, 'Please provide a first name'],
     },
     email: {
         type: String,
@@ -14,7 +18,12 @@ const UserSchema = new mongoose.Schema({
     passwordHash: {
         type: String,
         required: [true, 'Please provide a password']
-    }
+    },
+    
+    // role: {
+    //     type: String,
+    //     required: [true, 'Please provide a role']
+    // },
 }, { versionKey: false });
 
 //This line tells Mongoose to use your 'Users' collection

@@ -2,47 +2,50 @@
  * Router that handles user login requests.
  */
 
-import User from '@/lib/models/User'; // <-- The only logic import we need!
+import { authenticateUser } from '@/lib/auth/authService';
+import { InvalidCredentialsError } from '@/lib/auth/erorrs';
+import { createSessionToken } from '@/lib/auth/token';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
+  console.log("Recieved POST request, starting program")
   try {
-    //Get email and password from the React form
+
     const { email, password } = await request.json();
+    console.log('set email and password variables');
 
 
-    if (!email || !password) {
-      return NextResponse.json(
-        { error: 'Email and password are required' },
-        { status: 400 }
-      );
-    }
+    const dbUser = await authenticateUser(email, password);
+    console.log('dbUser created');
 
-    //Calls the Login method from User class
-    const loginSuccess = await User.login(email, password);
+    const token = await createSessionToken({
+      userId: dbUser.userID,
+      email: dbUser.email,
+      role: dbUser.role,
+    });
 
-    const token = email;
+    console.log('SessionToken initalized');
 
     (await cookies()).set("session", token, {
       httpOnly: true,
       path: "/",
     });
 
-    //Return a response based on success or failure
-    if (loginSuccess) {
-      return NextResponse.json({ message: 'Login successful!' });
-    } else {
-      return NextResponse.json(
-        { error: 'Invalid credentials' },
-        { status: 401 }
-      );
-    }
+    console.log('session cookie created');
+
+
+    return NextResponse.json({ message: 'Login successful!' });
+
   } catch (error) {
-    console.error(error);
-    return NextResponse.json(
-      { error: 'Server error occurred' },
-      { status: 500 }
-    );
+    if(error instanceof InvalidCredentialsError){
+      return new NextResponse("Invalid credentials", {status: 401});
+    }
+
+    console.error("Login Error", error);
+    return new NextResponse("Server Internal Error", {status: 500});
   }
-}
+  
+
+
+}  
