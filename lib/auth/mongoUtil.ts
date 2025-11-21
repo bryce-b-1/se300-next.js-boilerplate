@@ -5,6 +5,9 @@ import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import UserModel from '../db-models/UserModel';
 
+
+
+// test prints for mongoDatabase in the console
 export async function printDatabaseInformation(){
     const mongoose = require('mongoose');
     

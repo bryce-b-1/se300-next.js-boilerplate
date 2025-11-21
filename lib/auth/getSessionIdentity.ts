@@ -1,7 +1,10 @@
 import { cookies } from "next/headers";
 import { verifySessionToken } from "./token";
 
+
+// Grabs the token/session and verifies it exists, then returns userId and email as an object
 export async function getSessionIdentity() {
+  
   const token = (await cookies()).get("session")?.value;
   if (!token) return null;
 
@@ -12,8 +15,11 @@ export async function getSessionIdentity() {
 
   return {
     userId: payload.userId,
-    email: payload.email,
-    role: payload.role,
+    email: payload.email
   };
+}
+
+export async function removeSessionIdentity(){
+
 }
 

@@ -19,7 +19,7 @@ export default function RegisterForm() {
       const res = await fetch('/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password, firstName}),
       });
 
       const contentType = res.headers.get("content-type");

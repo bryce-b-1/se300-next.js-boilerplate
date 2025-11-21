@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const UserSchema = new mongoose.Schema({
     userId: {
         type: Number,
-        required: [true, 'Please provide a userID'],
+        required: [true, 'Please provide a userId'],
         unique: true
     },
     firstName: {

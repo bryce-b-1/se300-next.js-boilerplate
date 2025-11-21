@@ -20,9 +20,8 @@ export async function POST(request: Request) {
     console.log('dbUser created');
 
     const token = await createSessionToken({
-      userId: dbUser.userID,
-      email: dbUser.email,
-      role: dbUser.role,
+      userId: dbUser.userId,
+      email: dbUser.email
     });
 
     console.log('SessionToken initalized');

@@ -4,6 +4,8 @@ import { verifySessionToken } from "./lib/auth/token";
 import { cookies } from "next/headers";
 
 export default async function middleware(request: NextRequest) {
+
+  // set token 
   const token = (await cookies()).get("session")?.value;
   const session =  await verifySessionToken(token ?? "");
   // console.log("Token? -> " + token);

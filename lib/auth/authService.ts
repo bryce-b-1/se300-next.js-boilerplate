@@ -5,6 +5,8 @@ import { ExistingUserError, InvalidCredentialsError } from "./erorrs";
 import mongoose, { mongo } from "mongoose";
 
 
+
+// Checks the database to see if the email exists -> encrypts the passsword and checks that hash with the one in the database. If true, returns that user
 export async function authenticateUser(email: string, password: string) {
 
   await dbConnect();
@@ -33,11 +35,15 @@ export async function authenticateUser(email: string, password: string) {
 }
 
 
+// Connects to the database and checks if that user exists already, if unique then create a new user
 export async function createUser(email: string, password: string, firstName: string) {
 
-    console.log('Trying to connect to DB');
+    // console.log('Trying to connect to DB');
 
     await dbConnect();
+
+    console.log("Email is: " + email);
+    console.log("firstName is: " + firstName);
 
     const existingUser = await UserModel.findOne({ email });
     if (existingUser) {
@@ -49,12 +55,14 @@ export async function createUser(email: string, password: string, firstName: str
 
     console.log("Uhh count is " + userCount);
 
+    const nextCount = userCount + 1;
+
     const passwordHash = await bcrypt.hash(password, 10);
     
     console.log("passwordHash set as " + passwordHash);
 
     const newUser = new UserModel({
-        userID: userCount + 1,
+        userId: nextCount,
         email: email,
         passwordHash: passwordHash,
         firstName: firstName,
