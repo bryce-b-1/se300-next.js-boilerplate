@@ -19,11 +19,6 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Please provide a password']
     },
-    
-    // role: {
-    //     type: String,
-    //     required: [true, 'Please provide a role']
-    // },
 }, { versionKey: false });
 
 //This line tells Mongoose to use your 'Users' collection

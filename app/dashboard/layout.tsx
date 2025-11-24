@@ -4,7 +4,7 @@ import styles from './dashboard.module.css';
 import { cookies } from "next/headers";
 import UserModel from "@/lib/db-models/UserModel";
 import dbConnect from "@/lib/dbConnect";
-import { getCurrentUserFirstName, getCurrentUserId } from '@/lib/auth/getCurrentUser';
+import { getCurrentUserFirstName } from '@/lib/ts-models/User';
 
 export default async function DashboardLayout({
   children, // will be a page or nested layout
