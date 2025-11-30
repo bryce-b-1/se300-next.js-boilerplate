@@ -29,6 +29,26 @@ export async function getGroupName(groupID: number) {
 }
 
 
+export type GroupUI = {
+  groupID: number;
+  name: string;
+  description: string;
+};
+
+export function toGroupUI(g: any): GroupUI {
+  return {
+    groupID: g.groupID,                        
+    name: g.groupName ?? g.name ?? "",
+    description: g.groupDescription ?? g.description ?? "",
+  };
+}
+
+export function toGroupsUI(groups: any | null | undefined): GroupUI[] {
+  if (!Array.isArray(groups)) return [];
+  return groups.map(toGroupUI);
+}
+
+
 export async function getGroupDescription(groupID: number) {
   const group = await getGroupById(groupID);
   return group?.groupDescription || null;
@@ -60,4 +80,19 @@ export async function createGroup(groupID : number, groupName : String, groupDes
     })
 }
 
+
+export async function addMemberToGroup(groupID: number, userID: number, role: "leader" | "member" = "member") {
+  const group = await getGroupById(groupID);
+  if (!group) throw new Error("Group not found");
+
+  const alreadyMember = group.members.some((m: any) => m.userID === userID);
+  if (alreadyMember) {
+    throw new Error("User is already a member of this group");
+  }
+
+  group.members.push({ userID, role });
+  await group.save();
+
+  return group;
+}
 

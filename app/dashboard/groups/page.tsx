@@ -1,49 +1,34 @@
-// 'use client';
-
-// import dbConnect from "@/lib/dbConnect";
-// import { getGroupById } from "@/lib/ts-models/Group";
-// import React from "react";
 
 
-// export default function Groups(){
-//     const [groupId, setGroupId] = React.useState('');
-    
+import dbConnect from "@/lib/dbConnect";
+import {getIdFromIdentity } from "@/lib/ts-models/User";
+import { getUsersGroups, GroupUI, toGroupsUI } from "@/lib/ts-models/Group";
+import GroupCard from "@/app/ui/dashboard/groups/groupBox"; // your UI component
 
-    
-//     const handleSubmit = async (e: React.FormEvent) => {
-//        e.preventDefault();
+export default async function GroupsPage() {
+  await dbConnect();
 
-//        try {
-//         const res = await fetch('/api/register', {
-//             method: 'POST',
-//             headers: { 'Content-Type': 'application/json' },
-//             body: JSON.stringify({ groupId}),
-//         });
-        
-//         const group = getGroupById(Number(groupId));
-//        } catch (error) {
-//         console.log("idk brah");
-//        }
-        
-//     }
+  const ID = await getIdFromIdentity();
+//   console.log(ID)
 
-//     return (
-//         <>
-//         <p> nigga</p>
-//         <form onSubmit={handleSubmit}>
-//             <p> nigga</p>
-//             <input
-//                 type="text"
-//                 id="groupId"
-//                 placeholder="groupId"
-//                 value={groupId}
-//                 onChange={(e) => setGroupId(e.target.value)}
-//                 required
-//                 />
-//             <button type="submit" className="@applys bg-[#0070f3] text-[white] rounded cursor-pointer no-underline text-base mt-2.5 p-3 border-[none]" >
-//                  bruh 
-//             </button>
-//         </form>
-//         </>
-//     );
-// }
+  const groups = await getUsersGroups(ID ?? 1);  
+//   console.log(groups)
+
+  const uiGroups: GroupUI[] = toGroupsUI(groups);
+  console.log(uiGroups)
+
+  return (
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+    {uiGroups.length === 0 ? (
+      <p>No groups found.</p>
+    ) : (
+      uiGroups.map((group, index) => (
+        <GroupCard
+          key={group.name ?? index} 
+          group={group}             
+        />
+      ))
+    )}
+  </div>
+);
+}

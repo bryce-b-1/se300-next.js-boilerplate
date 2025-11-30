@@ -4,8 +4,15 @@
 import ProfileSettings from "@/app/ui/dashboard/Settings/profile-settings";
 import AccountSettings from "@/app/ui/dashboard/Settings/account-settings";
 import NotificationSettings from "@/app/ui/dashboard/Settings/notification-settings";
+import { getCurrentUserID } from "@/lib/ts-models/User";
+import UserModel from "@/lib/db-models/UserModel";
 
-export default function SettingsPage() {
+export default async function SettingsPage() {
+
+  // const userID = await getCurrentUserID();
+  // const user = await UserModel.findOne({ userID })
+
+  
   return (
     <div className="space-y-8">
 

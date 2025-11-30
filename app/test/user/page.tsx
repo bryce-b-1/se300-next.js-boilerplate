@@ -6,35 +6,49 @@ import React, { useState } from "react";
 
 
 export default function Groups(){
-    const [groupId, setGroupId] = useState('');
-    const [type, setType] = useState (1);
+    const [userID, setUserID] = useState (1);
+    const [firstName, setFirstName] = useState('Test Name');
+    const [email, setEmail] = useState('Test Email');
+    const [type, setType] = useState(0);
     const [result, setResult] = useState(null);
     
-
     
     const handleSubmit = async (e: React.FormEvent) => {
+       console.log("run???");
        e.preventDefault();
-      
-        const res = await fetch('/api/test/groups', {
+
+       console.log("Current type is" + type);
+
+        const res = await fetch('/api/test/user', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ type, groupId }),
+            body: JSON.stringify({ firstName, email, userID, type }),
         });
 
          const resultBrug = await res.json();
          setResult(resultBrug.result);
-         
-        
         
     }
 
     return (
     <div>
-      <form onSubmit={handleSubmit}>
+
+
+        <form onSubmit={() => {}}>
+            <p> Target User ID : {userID}</p>
         <input
-          value={groupId}
-          onChange={(e) => setGroupId(e.target.value)}
-          placeholder="Enter group ID"
+          value={userID}
+          onChange={(e) => setUserID(Number(e.target.value))}
+          placeholder="User ID"
+        />  
+        </form>
+
+      <form onSubmit = {(e) => {setType(0); handleSubmit(e);}}>
+        <p> Target User First Name: {firstName}</p>
+        <input
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          placeholder="Enter new first name"
         />
         <button
         type="submit"
@@ -42,18 +56,29 @@ export default function Groups(){
                     hover:bg-blue-700 focus:outline-none focus:ring-2 
                     focus:ring-blue-400 focus:ring-offset-2 transition"
         >
-        Lookup Group
+        First Name Changer
         </button>     
 
 
-        {/* <button
+        </form>
+        
+        <form onSubmit={(e) => {setType(1); handleSubmit(e)}}>
+        <p> Target User Email: {email}</p>
+        <input
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Enter new email"
+        />
+        <button
         type="submit"
         className="mt-2 rounded-md bg-blue-600 px-4 py-2 text-white font-medium 
                     hover:bg-blue-700 focus:outline-none focus:ring-2 
                     focus:ring-blue-400 focus:ring-offset-2 transition"
         >
-        Lookup Groups
-        </button> */}
+        Email Changer
+        </button>     
+
+
         </form>
 
       {result && (

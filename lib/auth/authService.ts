@@ -62,7 +62,7 @@ export async function createUser(email: string, password: string, firstName: str
     console.log("passwordHash set as " + passwordHash);
 
     const newUser = new UserModel({
-        userId: nextCount,
+        userID: nextCount,
         email: email,
         passwordHash: passwordHash,
         firstName: firstName,
