@@ -1,9 +1,9 @@
 'use client'; 
 
 
-import ProfileSettings from "@/app/ui/dashboard/Settings/profile-settings";
-import AccountSettings from "@/app/ui/dashboard/Settings/account-settings";
-import NotificationSettings from "@/app/ui/dashboard/Settings/notification-settings";
+import ProfileSettings from "@/src/ui/dashboard/Settings/profile-settings";
+import AccountSettings from "@/src/ui/dashboard/Settings/account-settings";
+import NotificationSettings from "@/src/ui/dashboard/Settings/notification-settings";
 import { getCurrentUserID } from "@/src/lib/ts-models/User";
 import UserModel from "@/src/lib/db-models/UserModel";
 
