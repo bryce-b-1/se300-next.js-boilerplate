@@ -1,21 +1,24 @@
 import { createUser } from '@/lib/auth/authService';
 import { ExistingUserError } from '@/lib/auth/erorrs';
-import { getGroupById, getUserRoleInGroup, getUsersGroups } from '@/lib/ts-models/Group';
+import dbConnect from '@/lib/dbConnect';
+import { getGroupById, getUserRoleInGroup, getUsersGroups, addMemberToGroup } from '@/lib/ts-models/Group';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   try {
     const { type, groupId } = await request.json();
     
-
+    await dbConnect();
 
     // const result = await getGroupById(Number(groupId));
-    // const result = await getUsersGroups(0);
-    const result = await getUserRoleInGroup(0,0);
+    const result = await getUsersGroups(1);
+    // const result = await getUserRoleInGroup(1,1);
+    // const result = await addMemberToGroup(1, 2, "member");  
+
     console.log(result);
 
 
-    return NextResponse.json({ message: 'Account created successfully!', result });
+    return NextResponse.json({ message: 'No error detected. API result returned.', result });
 
 
   } catch (error) {

@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
 
 const UserSchema = new mongoose.Schema({
-    userId: {
+    userID: {
         type: Number,
-        required: [true, 'Please provide a userId'],
+        required: [true, 'Please provide a userID'],
         unique: true
     },
     firstName: {

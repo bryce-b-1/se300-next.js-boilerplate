@@ -6,8 +6,8 @@ const secret = new TextEncoder().encode(process.env.JWT_SECRET || "dev-secret");
 
 
 
-// Creates the JWT session token with userId and email.
-export async function createSessionToken(payload: {userId: number; email: string}) { 
+// Creates the JWT session token with userID and email.
+export async function createSessionToken(payload: {userID: number; email: string}) { 
     const token = await new SignJWT(payload)
     .setProtectedHeader({alg: "HS256"})
     .setIssuedAt()
@@ -18,12 +18,12 @@ export async function createSessionToken(payload: {userId: number; email: string
 }
 
 
-// Returns the userId email and email as a object
+// Returns the userID email and email as a object
 export async function verifySessionToken(token: string) {
   try {
     const { payload } = await jwtVerify(token, secret);
     // console.log(payload);
-    return payload as { userId: number; email: string};
+    return payload as { userID: number; email: string};
   } catch {
     // console.log("null detected");
     return null;
