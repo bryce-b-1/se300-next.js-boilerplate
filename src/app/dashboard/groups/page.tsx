@@ -1,5 +1,3 @@
-
-
 import dbConnect from "@/src/lib/dbConnect";
 import {getIdFromIdentity } from "@/src/lib/ts-models/User";
 import { getUsersGroups, GroupUI, toGroupsUI } from "@/src/lib/ts-models/Group";
