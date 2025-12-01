@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { verifySessionToken } from "./lib/auth/token";
+import { verifySessionToken } from "./src/lib/auth/token";
 import { cookies } from "next/headers";
 
 export default async function middleware(request: NextRequest) {
