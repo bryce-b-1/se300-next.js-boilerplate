@@ -2,13 +2,6 @@ import mongoose from 'mongoose';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
-if (!MONGODB_URI) {
-    throw new Error(
-        'Please define the MONGODB_URI environment variable inside .env.local'
-    );
-}
-
-
 let cached = (global as any).mongoose;
 
 if (!cached) {
@@ -16,8 +9,20 @@ if (!cached) {
 }
 
 async function dbConnect() {
+    if (process.env.NEXT_BUILD_ID) {
+        console.log('NOTICE: Skipping DB connection during Vercel Build...');
+        return; // Skip connection setup
+    }
+
     if (cached.conn) {
         return cached.conn;
+    }
+
+    // Check MONGODB_URI here before proceeding with a connection attempt
+    if (!MONGODB_URI) {
+        throw new Error(
+            'MONGODB_URI is missing. Please define it in Vercel Environment Variables or your local .env.local file.'
+        );
     }
 
     if (!cached.promise) {
@@ -25,11 +30,12 @@ async function dbConnect() {
         bufferCommands: false,
         };
 
+        // Use MONGODB_URI! to assert it's defined since we checked above
         cached.promise = mongoose.connect(MONGODB_URI!, opts).then((mongoose) => {
         return mongoose;
         });
     }
-  
+
     try {
         cached.conn = await cached.promise;
     } catch (e) {
