@@ -1,5 +1,6 @@
 import { createUser } from '@/src/lib/auth/authService';
 import { ExistingUserError } from '@/src/lib/auth/erorrs';
+import dbConnect from '@/src/lib/dbConnect';
 import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
@@ -7,6 +8,8 @@ export async function POST(request: Request) {
     // Get email and password from the React form
     const { email, password, firstName } = await request.json();
     let userFirstName = "Default User"; // default name here
+
+    await dbConnect();
 
     if (!email || !password) {
       return NextResponse.json(

@@ -5,6 +5,7 @@
 import { authenticateUser } from '@/src/lib/auth/authService';
 import { InvalidCredentialsError } from '@/src/lib/auth/erorrs';
 import { createSessionToken } from '@/src/lib/auth/token';
+import dbConnect from '@/src/lib/dbConnect';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 
@@ -12,6 +13,7 @@ export async function POST(request: Request) {
   console.log("Recieved POST request, starting program")
   try {
 
+    await dbConnect();
     const { email, password } = await request.json();
     console.log('set email and password variables');
 
