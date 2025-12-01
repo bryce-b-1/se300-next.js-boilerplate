@@ -1,5 +1,5 @@
-import NavLinks from '../ui/dashboard/nav-links';
-import SideNav from '../ui/dashboard/sidenav';
+import NavLinks from '../../ui/dashboard/nav-links';
+import SideNav from '../../ui/dashboard/sidenav';
 import styles from './dashboard.module.css';
 import { cookies } from "next/headers";
 import UserModel from "@/src/lib/db-models/UserModel";

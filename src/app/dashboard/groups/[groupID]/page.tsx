@@ -6,6 +6,14 @@ import EventModel from "@/src/lib/db-models/EventModel";
 import PollModel from "@/src/lib/db-models/PollModel";
 import AnnouncementModel from "@/src/lib/db-models/AnnouncementModel";
 
+interface GroupDocument {
+  _id?: string;
+  groupID: number;
+  groupName: string;
+  groupDescription?: string;
+  members?: Array<any>;
+}
+
 type GroupPageProps = {
   params: {
     groupID: string; // from the URL
@@ -17,13 +25,12 @@ export default async function GroupPage({ params }: GroupPageProps) {
 
   const groupID = Number(params.groupID);
 
-  // Load group + related data in parallel
-  const [group, events, announcements, polls] = await Promise.all([
+  const [group, events, announcements, polls] = (await Promise.all([
     GroupModel.findOne({ groupID }).lean(),
     EventModel.find({ groupID }).sort({ startTime: 1 }).lean(),
     AnnouncementModel.find({ groupID }).sort({ createdAt: -1 }).lean(),
     PollModel.find({ groupID }).sort({ createdAt: -1 }).lean(),
-  ]);
+  ])) as [GroupDocument | null, any[], any[], any[]]; 
 
   if (!group) {
     return <div className="p-6">Group not found.</div>;

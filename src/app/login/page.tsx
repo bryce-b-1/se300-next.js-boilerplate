@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import LoginForm from '../ui/login-register/loginform';
+import LoginForm from '../../ui/login-register/loginform';
 
 export default function LoginPage() {
   return (

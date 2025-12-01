@@ -1,8 +1,7 @@
 import Link from 'next/link';
-import NavLinks from '@/app/ui/dashboard/nav-links';
+import NavLinks from './nav-links';
 import RiddleLogo from '../riddle-logo';
 import { PowerIcon } from '@heroicons/react/24/outline';
-import User from '@/lib/models/User';
 import SignOutButton from './signout-button';
 
 
