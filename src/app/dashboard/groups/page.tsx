@@ -1,9 +1,7 @@
-
-
 import dbConnect from "@/src/lib/dbConnect";
 import {getIdFromIdentity } from "@/src/lib/ts-models/User";
 import { getUsersGroups, GroupUI, toGroupsUI } from "@/src/lib/ts-models/Group";
-import GroupCard from "@/src/ui/dashboard/groups/groupBox"; // your UI component
+import GroupCard from "@/src/ui/dashboard/groups/groupBox";
 
 export default async function GroupsPage() {
   await dbConnect();
