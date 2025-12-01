@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
+
 let cached = (global as any).mongoose;
 
 if (!cached) {
@@ -9,16 +10,17 @@ if (!cached) {
 }
 
 async function dbConnect() {
+    // Skip connection setup during the Vercel build
     if (process.env.NEXT_BUILD_ID) {
         console.log('NOTICE: Skipping DB connection during Vercel Build...');
-        return; // Skip connection setup
+        return; 
     }
 
     if (cached.conn) {
         return cached.conn;
     }
-
-    // Check MONGODB_URI here before proceeding with a connection attempt
+    
+    // MONGODB_URI check is now critical BEFORE connection attempt
     if (!MONGODB_URI) {
         throw new Error(
             'MONGODB_URI is missing. Please define it in Vercel Environment Variables or your local .env.local file.'
