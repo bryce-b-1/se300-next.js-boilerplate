@@ -1,10 +1,5 @@
-/**
- * This file CREATES a connection to MongoDB using Mongoose.
- */
-
 import mongoose from 'mongoose';
 
-// We get the URI from the .env.local file
 const MONGODB_URI = process.env.MONGODB_URI;
 
 if (!MONGODB_URI) {
@@ -13,11 +8,7 @@ if (!MONGODB_URI) {
     );
 }
 
- 
-/**
- * Global is used here to maintain a cached connection across hot reloads
- * in development. This is not a concern in production.
- */
+
 let cached = (global as any).mongoose;
 
 if (!cached) {
